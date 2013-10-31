@@ -10,13 +10,14 @@
 #define __PROTOCOLS_H__
 
 // From RFC 790-793 
-#define ARP_PROTOCOL 	            0x0806
-#define IP_PROTOCOL  		    0x0800
-#define ETHERNET_PROTOCOL	    0x0001
+#define ARP_PROTOCOL        0x0806
+#define IP_PROTOCOL         0x0800
+#define ETHERNET_PROTOCOL   0x0001
 
 // From IP RFC 
-#define ICMP_PROTOCOL 		    1
-#define TCP_PROTOCOL 		    6
-#define UDP_PROTOCOL 		    17
+#define ICMP_PROTOCOL       1
+#define TCP_PROTOCOL        6
+#define UDP_PROTOCOL        17
+#define OSPF_PROTOCOL       89
 
 #endif

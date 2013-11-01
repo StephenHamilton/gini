@@ -67,6 +67,8 @@ typedef struct _arp_packet_t
 	uchar dst_ip_addr[4];                    // Target IP address
 } arp_packet_t;
 
+// Access ARP table externally
+extern arp_entry_t ARPtable[MAX_ARP];
 
 int ARPResolve(gpacket_t *in_pkt);
 void ARPProcess(gpacket_t *pkt);

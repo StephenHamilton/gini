@@ -18,6 +18,9 @@
 #include "filter.h"
 #include <pthread.h>
 
+// testing
+#include "ospf.h"
+
 router_config rconfig = {.router_name=NULL, .gini_home=NULL, .cli_flag=0, .config_file=NULL, .config_dir=NULL, .ghandler=0, .clihandler= 0, .scheduler=0, .worker=0, .schedcycle=10000};
 pktcore_t *pcore;
 classlist_t *classifier;
@@ -82,11 +85,14 @@ int main(int ac, char *av[])
 	// char *qname, char *dqisc, double qweight, double delay_us, int nslots);
 	addPktCoreQueue(pcore, "default", "taildrop", 1.0, 2.0, 0);
 	
+
+  /*
   // add the OSPF queue, with default settings (we'll adjust these later)
   addPktCoreQueue(pcore, "ospf", "taildrop", 1.0, 2.0, 0);
   addClassDef(classifier, "ospf");
   insertProtSpec(classifier,"ospf",IP_PROTOCOL);
   insertTOSSpec(classifier,"ospf",7);
+  */
 
   rconfig.scheduler = PktCoreSchedulerInit(pcore);
 	rconfig.worker = PktCoreWorkerInit(pcore);
@@ -106,6 +112,10 @@ int main(int ac, char *av[])
 	wait4thread(rconfig.scheduler);
 	wait4thread(rconfig.worker);
 	wait4thread(rconfig.ghandler);
+
+  OSPFInit();
+  OSPFBroadcastHelloPacket();
+
 }
 
 

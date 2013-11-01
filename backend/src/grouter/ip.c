@@ -13,6 +13,7 @@
 #include "ip.h"
 #include "fragment.h"
 #include "packetcore.h"
+#include "ospf.h"
 #include <stdlib.h>
 #include <slack/err.h>
 #include <netinet/in.h>
@@ -45,11 +46,11 @@ void IPIncomingPacket(gpacket_t *in_pkt)
 	uchar bcast_ip[] = IP_BCAST_ADDR;
 
 	// Is this IP packet for me??
-	if (IPCheckPacket4Me(in_pkt))
-	{
-		verbose(2, "[IPIncomingPacket]:: got IP packet destined to this router");
-		IPProcessMyPacket(in_pkt);
-	} else if (COMPARE_IP(gNtohl(tmpbuf, ip_pkt->ip_dst), bcast_ip) == 0)
+	if (IPCheckPacket4Me(in_pkt)) 
+  {
+    verbose(2, "[IPIncomingPacket]:: got IP packet destined to this router"); 
+    IPProcessMyPacket(in_pkt);
+  } else if (COMPARE_IP(gNtohl(tmpbuf, ip_pkt->ip_dst), bcast_ip) == 0)
 	{
 		// TODO: rudimentary 'broadcast IP address' check
 		verbose(2, "[IPIncomingPacket]:: not repeat broadcast (final destination %s), packet thrown",
@@ -318,7 +319,7 @@ int IPProcessMyPacket(gpacket_t *in_pkt)
     }
 
     if(ip_pkt->ip_prot == OSPF_PROTOCOL){
-      OSPFProcess(in_pkt);
+      OSPFProcessPacket(in_pkt);
       return EXIT_SUCCESS;
     }
 

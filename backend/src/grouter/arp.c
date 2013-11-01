@@ -19,12 +19,11 @@
 
 int tbl_replace_indx;            // overwrite this element if no free space in ARP table
 int buf_replace_indx;            // overwrite this element if no free space in ARP buffer
-arp_entry_t ARPtable[MAX_ARP];		                // ARP table
 arp_buffer_entry_t ARPbuffer[MAX_ARP_BUFFERS];   	// ARP buffer for unresolved packets
 
 
 extern pktcore_t *pcore;
-
+arp_entry_t ARPtable[MAX_ARP];
 
 void ARPInit()
 {

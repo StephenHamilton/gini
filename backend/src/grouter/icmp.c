@@ -91,15 +91,19 @@ void ICMPDoPing(uchar *ipaddr, int pkt_size, int retries)
 
 }
 
-
-
 void ICMPSendPingPacket(uchar *dst_ip, int size, int seq)
 {
 	gpacket_t *out_pkt = (gpacket_t *) malloc(sizeof(gpacket_t));
 	ip_packet_t *ipkt = (ip_packet_t *)(out_pkt->data.data);
-	ipkt->ip_hdr_len = 5;                                  // no IP header options!!
-	icmphdr_t *icmphdr = (icmphdr_t *)((uchar *)ipkt + ipkt->ip_hdr_len*4);
-	ushort cksum;
+	
+  // since no options, there are 5 32bit words of data in the header
+  ipkt->ip_hdr_len = 5;
+	
+  // get a pointer to the start of data after ip header (20 bytes). use 
+  // a uchar (8 bits) for the pointer arithmetic
+  icmphdr_t *icmphdr = (icmphdr_t *)((uchar *)ipkt + ipkt->ip_hdr_len*4);
+	
+  ushort cksum;
 	struct timeval *tp = (struct timeval *)((uchar *)icmphdr + 8);
 	struct timezone tz;
 	uchar *dataptr;
